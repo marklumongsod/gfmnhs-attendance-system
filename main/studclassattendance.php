@@ -125,6 +125,11 @@ if (isset($_GET['dt'])) {
                                 } else {
                                     $dt = "";
                                 }
+                                
+                                // $result = my_query("SELECT *,CONCAT(fname,' ',lname)student ,cc.id id,cc.status FROM tbl_inout     cc INNER JOIN tbl_students u ON u.id=cc.stud_id  
+                                // WHERE cc.classId='$classId' $dt
+                                // ORDER BY cc.id DESC");
+
                                 $result = my_query("SELECT *,
                                                 CONCAT(stud.fname,' ',stud.lname) AS student,
                                                 in_out.id AS id,
@@ -133,6 +138,7 @@ if (isset($_GET['dt'])) {
                                                 INNER JOIN tbl_students AS stud ON stud.id = in_out.stud_id  
                                                 INNER JOIN tbl_class AS class ON class.id = in_out.classId
                                                 INNER JOIN tbl_users AS user ON user.id = class.facId
+                                                INNER JOIN tbl_settings_constants AS settings ON settings.value = class.section AND settings.sub_value = class.grade
                                                 WHERE in_out.classId='$classId' $dt
                                                 ORDER BY in_out.id DESC");
 
@@ -141,14 +147,10 @@ if (isset($_GET['dt'])) {
                                 Subject: <?php if (isset($data['subject']) && !empty($data['subject'])) : ?><p><?= $data['subject']; ?></p><?php endif; ?></th> 
                                 Year/Section: <?php if (isset($data['grade']) && !empty($data['grade']) && isset($data['section']) && !empty($data['section'])) : ?><p><?= $data['grade']; ?> - <?= $data['section']; ?></p><?php endif; ?>
                                 Teacher: <?php if (isset($data['fname']) && !empty($data['fname']) && isset($data['lname']) && !empty($data['lname'])) : ?><p><?= $data['fname']; ?> <?= $data['lname']; ?></p><?php endif; ?>
-                              
+                               
                                 <div class="table-responsive">
                                 <table class="table-bordered table-striped table-hover">
-   
-                                        <?php for ($i = 1; $row = $result->fetch(); $i++) {
-                                        $id = $row['id'];
-                                        $stud_id = $row['stud_id']; ?>
-                                            <thead>
+                                <thead>
                                                 <tr class="header">
                                                     <th>#</th>
                                                     <th>NAME</th>
@@ -158,6 +160,10 @@ if (isset($_GET['dt'])) {
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                        <?php for ($i = 1; $row = $result->fetch(); $i++) {
+                                        $id = $row['id'];
+                                        $stud_id = $row['stud_id']; ?>
+                                            
                                                 <tr>
                                                     <td><?= $id ?></td>
                                                     <td><?= $row['student']; ?></td>
@@ -172,6 +178,7 @@ if (isset($_GET['dt'])) {
                                             </tbody>
                                         </table>
                                     </div>
+                                    Adviser: <?php if (isset($data['adviser']) && !empty($data['adviser'])) : ?><p><?= $data['adviser'];  ?></p><?php endif; ?>
                             </div>
                         </div>
                     </div>
