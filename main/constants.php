@@ -185,6 +185,14 @@ for ($i = 1; $row = $result->fetch(); $i++) {
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input name="adviser" value="<?= $row['adviser']; ?>" type="text" class="form-control">
+                                    <label class="form-label">Adviser</label>
+                                </div>
+                            </div>
+                        </div>
 
 
                     </div>

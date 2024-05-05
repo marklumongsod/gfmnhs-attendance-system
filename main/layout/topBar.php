@@ -1,9 +1,10 @@
-   <nav class="navbar" >
+<div class="head-content">
+    <nav class="navbar">
         <div class="container-fluid">
-             <div class="navbar-header">
+            <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-               <img src="../images/top1.png" width="100%">
+                <img src="../images/top1.png" width="100%">
 
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -16,3 +17,4 @@
             </div>
         </div>
     </nav>
+</div>
