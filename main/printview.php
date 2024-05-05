@@ -223,7 +223,9 @@ if (isset($_SESSION['print_data'])) {
                 if ($data) {
                     echo "<p><strong>Subject:</strong> " . htmlspecialchars($data['subject']) . "</p>";
                     echo "<p><strong>Year/Section:</strong> " . htmlspecialchars($data['grade']) . " - " . htmlspecialchars($data['section']) . "</p>";
-                    echo "<p><strong>Teacher:</strong> " . htmlspecialchars($data['fname']) . " " . htmlspecialchars($data['lname']) . "</p>";
+                    echo "<p><strong>Teacher:</strong> " . htmlspecialchars($data['fname']) . " " . htmlspecialchars($data['lname']);
+                    $formattedDate = date("F j, Y", strtotime($data['xdate']));
+                    echo "<span style='float: right;'><strong>Date:</strong> " . htmlspecialchars($formattedDate) . "</span></p>";
                 }
             } else {
                 echo "";

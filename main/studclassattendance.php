@@ -203,7 +203,6 @@ while ($row = $result->fetch()) {
             .header-row th,
             .header-row td {
                 font-size: 14px;
-                /* Adjust font size as needed */
             }
 
             .sidebar,
@@ -331,14 +330,18 @@ while ($row = $result->fetch()) {
                                     <?php
                                     $result->execute();
 
-                                    while ($row = $result->fetch()) {
-                                        echo "<tr>";
-                                        echo "<td>" . htmlspecialchars($id++) . "</td>";
-                                        echo "<td>" . htmlspecialchars($row['student']) . "</td>";
-                                        echo "<td>" . htmlspecialchars($row['studNo']) . "</td>";
-                                        echo "<td>" . htmlspecialchars(format_time($row['xtime'])) . "</td>";
-                                        echo "<td class='" . (($row['status'] === 'On Time') ? 'on-time' : '') . "'>" . htmlspecialchars($row['status']) . "</td>";
-                                        echo "</tr>";
+                                    if ($result->rowCount() > 0) {
+                                        while ($row = $result->fetch()) {
+                                            echo "<tr>";
+                                            echo "<td>" . htmlspecialchars($id++) . "</td>";
+                                            echo "<td>" . htmlspecialchars($row['student']) . "</td>";
+                                            echo "<td>" . htmlspecialchars($row['studNo']) . "</td>";
+                                            echo "<td>" . htmlspecialchars(format_time($row['xtime'])) . "</td>";
+                                            echo "<td class='" . (($row['status'] === 'On Time') ? 'on-time' : '') . "'>" . htmlspecialchars($row['status']) . "</td>";
+                                            echo "</tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='5'>No data available</td></tr>";
                                     }
                                     ?>
                                 </table><br>
