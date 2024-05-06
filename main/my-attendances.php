@@ -48,13 +48,14 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $result = my_query("SELECT i.id,CONCAT(fname, ' ' ,lname)fullname,xdate,xtime  ,i.status  FROM tbl_inout i INNER JOIN tbl_students r ON r.id=i.stud_id  WHERE stud_id='$user_id'  ORDER BY id DESC ");
+                                    <?php $result = my_query("SELECT i.id,CONCAT(fname, ' ' ,lname)fullname,xdate,xtime  
+                                    ,i.status  FROM tbl_inout i INNER JOIN tbl_students r ON r.id=i.stud_id  WHERE stud_id='$user_id'  ORDER BY id DESC ");
                                     for ($i = 1; $row = $result->fetch(); $i++) {
                                         $id = $row['id']; ?>
                                         <tr>
                                             <td><?= $row['fullname']; ?></td>
-                                            <td><?= $row['xdate']; ?></td>
-                                            <td><?= $row['xtime']; ?></td>
+                                            <td><?= format_date($row['xdate']); ?></td>
+                                            <td><?= format_time($row['xtime']); ?></td>
                                             <td><?= $row['status']; ?></td>
                                        
                                         </tr>

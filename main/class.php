@@ -36,7 +36,7 @@
                     <div class="body">
                         <div class="table-responsive">
                             
-                            
+                            <?php    if ($_SESSION['role'] == 'Admin') { ?>
                              <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                 <thead>
                                 <tr>
@@ -51,7 +51,7 @@
                                 if ($_SESSION['role'] == 'Teacher') {
                                     $facId = $_SESSION['user_id'];
                                     $result = my_query("SELECT *,CONCAT(fname,' ',lname)teacher,CONCAT(section,'-',subject)classInfo ,c.id as cid FROM tbl_class c INNER JOIN tbl_users u ON u.id=c.facId 
-                                    WHERE classyr='$classyr' AND facId='$facId' ORDER BY c.id DESC");
+                                    WHERE classyr='$classyr' AND facId='$facId' GROUP BY facId ORDER BY c.id DESC");
                                 } else {
                                     $result = my_query("SELECT *,CONCAT(fname,' ',lname)teacher,CONCAT(section,'-',subject)classInfo ,c.id as cid FROM tbl_class c INNER JOIN tbl_users u ON u.id=c.facId WHERE classyr='$classyr'  GROUP BY facId ORDER BY c.id DESC");
                                 }
@@ -67,14 +67,16 @@
                                 <?php } ?>
                                 </tbody>
                             </table>
-                            
+                            <?php } ?>
                             
                             <?php if(isset($_GET['tid'])){ ?>
                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                 <thead>
                                 <tr>
                                     <th>Class Id </th>
+                                    <?php if ($_SESSION['role'] == 'Admin') { ?>
                                     <th>Teacher</th>
+                                    <?php }?>
                                     <th>Grade</th>
                                     <th>Section</th>
                                     <th>Subject</th>
@@ -95,7 +97,9 @@
                                     $id = $row['cid']; ?>
                                     <tr>
                                         <td><?= $row['classId']; ?></td>
+                                        <?php if ($_SESSION['role'] == 'Admin') { ?>
                                         <td><?= $row['teacher']; ?></td>
+                                        <?php }?>
                                         <td><?= $row['grade']; ?></td>
                                         <td><?= $row['section']; ?></td>
                                         <td><?= $row['subject']; ?></td>

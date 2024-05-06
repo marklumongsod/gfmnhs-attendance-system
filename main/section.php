@@ -121,7 +121,7 @@
                   
                 <input name="category" value="Section" type="hidden" class="form-control" required>
                     <div class="modal-header">
-                        <h4 class="modal-title" id="defaultModalLabel">Add <?= $title; ?>
+                        <h4 class="modal-title" id="defaultModalLabel">Add Section
                         </h4>
 
                     </div>
@@ -132,7 +132,7 @@
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <input name="value" type="text" class="form-control" required>
-                                    <label class="form-label">Value</label>
+                                    <label class="form-label">Section</label>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <input name="sub_value" type="text" class="form-control">
-                                    <label class="form-label">Sub Value</label>
+                                    <label class="form-label">Grade</label>
                                 </div>
                             </div>
                         </div>
@@ -167,27 +167,26 @@ for ($i = 1; $row = $result->fetch(); $i++) {
         <div class="modal-dialog  modal-smd" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Edit <?= $title; ?></h4>
+                    <h4 class="modal-title" id="defaultModalLabel">Edit Section</h4>
                 </div>
                 <form action="models/CRUDS.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="<?= $id; ?>">
 
                     <div class="modal-body">
 
-
-                        <div class="col-md-12">
+                       <div class="col-md-12">
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <label class="form-label">Category </label>
                                     <input name="category" value="<?= $row['category']; ?>" type="text" class="form-control" required>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <div class="col-md-12">
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <input name="value" value="<?= $row['value']; ?>" type="text" class="form-control" required>
-                                    <label class="form-label">Value</label>
+                                    <label class="form-label">Section</label>
                                 </div>
                             </div>
                         </div>
@@ -195,7 +194,7 @@ for ($i = 1; $row = $result->fetch(); $i++) {
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <input name="sub_value" value="<?= $row['sub_value']; ?>" type="text" class="form-control">
-                                    <label class="form-label">Sub Value</label>
+                                    <label class="form-label">Grade</label>
                                 </div>
                             </div>
                         </div>

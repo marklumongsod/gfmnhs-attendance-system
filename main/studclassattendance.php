@@ -350,7 +350,7 @@ while ($row = $result->fetch()) {
                                 if (isset($data['adviser']) && !empty($data['adviser'])) {
                                     echo "<div style='margin-top: 20px;'>";
                                     // echo "<hr style='border: none; border-top: 1px solid #000; margin-bottom: 30px;'>";
-                                    echo "<div style='text-align: right; font-weight: bold; padding-right: 30px'>" . htmlspecialchars($data['adviser']) . "</div>";
+                                    echo "<div style='text-align: right; font-weight: bold; padding-right: 50px'>" . htmlspecialchars($data['adviser']) . "</div>";
                                     echo "<div style='text-align: right;'>__________________________</div>";
                                     echo "<div style='text-align: right; font-weight: bold; padding-right: 60px;'>Adviser</div>";
                                     echo "</div>";

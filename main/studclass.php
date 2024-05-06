@@ -2,8 +2,15 @@
 <section class="content">
     <div class="container-fluid">
 
+    <?php
+    if(isset($_POST['teachername'])){
+        $_SESSION['teachername'] =$_POST['teachername']; 
+        echo "<script type='text/javascript'> history.go(-1);</script>";
+    } 
 
-        <div id="printableArea">
+    ?>
+
+        <div id="printableArea1">
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
@@ -31,14 +38,16 @@
 
                             <?php if ($_SESSION['role'] == 'Teacher') { ?>
                                 <a onclick="printDiv('printableArea')" class="btn right btn-warning  waves-effect waves-light yellow darken-4">
-                                    <i class="material-icons">add</i>PRINT </a>
+                                    <i class="material-icons">print</i>PRINT </a>
 
                             <?php } else { ?>
                                 <a class="btn right btn-success  waves-effect waves-light yellow darken-4" data-toggle="modal" data-target="#add">
                                     <i class="material-icons">add</i>ADD </a>
                             <?php } ?>
+
+
                             <h2>
-                                STUDENT SCHEDULE (<?= $_GET['classInfo']; ?>)
+                                MASTERLIST 
                                 
                                 <?php 
                                 $grade=$_GET['grade'];
@@ -52,16 +61,35 @@
                                     }
                                     
                                     ?>
+
+<?php  $classId = $_SESSION['classId'];
+                                     $result = my_query("SELECT *,CONCAT(fname, ' ', lname)name FROM tbl_class c  INNER JOIN tbl_users u ON u.id=c.facId WHERE  c.id='$classId'");
+                                       if( $row = $result->fetch()) {
+                                        $teacher=$row['name'];
+                                        $sub=$row['subject'];
+                                        $gs=$row['grade']. ' - '.$row['section'];
+                                        }
+                                         ?>
+                                 
                             </h2>
 
-                        </div>
-                        <div class="body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                        </div> 
+                        <br/>
+                        <div id="printableArea" class="body">
+                                <img src="../images/headprint.png" width="100%" > 
+
+                            <div class=""> 
+                                <br/>
+                                Teacher : <?= $teacher;?>  <br/>
+                                    Subject : <?= $sub;?>  <br/> 
+                                    Gr & Section : <?=$gs;?> 
+                                    <br/>
+                            <h4> MALE</h4> 
+                                    <table class="  table-bordered table-striped table-hover    ">
                                     <thead>
                                     <tr>
-                                        <th>Student</th>
-                                        <th>Stud No.</th> 
+                                        <th  width="500px">Student</th>
+                                        <th  width="500px">LRN</th> 
                                         <?php if ($_SESSION['role'] == 'Admin') { ?>
                                             <th>Action</th>
                                         <?php } ?>
@@ -73,14 +101,14 @@
                                      $sec = $_GET['section'];
                                      $gryr = $_GET['grade'];
                                     $classId = $_GET['classId'];
-                                    $result = my_query("SELECT *,CONCAT(fname,' ',lname)student ,cc.id id 
+                                    $result = my_query("SELECT *,CONCAT(lname,', ',fname)student ,cc.id id 
                                     FROM tbl_classstudent cc INNER JOIN tbl_students u ON u.id=cc.studId INNER JOIN
-                                     tbl_class c ON cc.classId=c.id WHERE classId='$classId' ORDER BY cc.id DESC");
+                                     tbl_class c ON cc.classId=c.id WHERE classId='$classId' AND gender='Male' ORDER BY u.lname ASC");
                                     for ($i = 1; $row = $result->fetch(); $i++) {
                                         $id = $row['id']; ?>
                                         <tr>
-                                            <td><?= $row['student']; ?></td>
-                                            <td><?= $row['studNo']; ?></td> 
+                                            <td  ><?= $row['student']; ?></td>
+                                            <td  ><?= $row['studNo']; ?></td> 
 
                                             <?php if ($_SESSION['role'] == 'Admin') { ?>
 
@@ -97,6 +125,60 @@
                                     <?php } ?>
                                     </tbody>
                                 </table>
+
+                                <br/>
+                               <h4> FEMALE</h4>
+
+                                <table class="  table-bordered table-striped table-hover    ">
+                                    <thead>
+                                    <tr>
+                                        <th  width="500px">Student</th>
+                                        <th  width="500px">LRN</th> 
+                                        <?php if ($_SESSION['role'] == 'Admin') { ?>
+                                            <th>Action</th>
+                                        <?php } ?>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <?php 
+                                     $sec = $_GET['section'];
+                                     $gryr = $_GET['grade'];
+                                    $classId = $_GET['classId'];
+                                    $result = my_query("SELECT *,CONCAT(lname,', ',fname)student ,cc.id id 
+                                    FROM tbl_classstudent cc INNER JOIN tbl_students u ON u.id=cc.studId INNER JOIN
+                                     tbl_class c ON cc.classId=c.id WHERE classId='$classId' AND gender='Female' ORDER BY u.lname ASC");
+                                    for ($i = 1; $row = $result->fetch(); $i++) {
+                                        $id = $row['id']; ?>
+                                        <tr>
+                                            <td  ><?= $row['student']; ?></td>
+                                            <td  ><?= $row['studNo']; ?></td> 
+
+                                            <?php if ($_SESSION['role'] == 'Admin') { ?>
+
+                                                <td>
+
+                                                    <a class="btn right btn-danger waves-effect waves-light yellow darken-4 col s12" data-toggle="modal" data-target="#delete<?= $id; ?>">
+                                                        <i class="material-icons">delete_forever</i>Delete</a>
+
+                                                </td>
+                                            <?php } ?>
+
+
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+
+
+                                <br/><br/><br/>
+                                    <!-- <?=addSpace(3);?>    __<u><?=$teacher;?></u>___ <br/> --> 
+                                    <form action="" method="POST" >
+                                 <input type='text' name="teachername" value="<?=(isset($_SESSION['teachername']) ? $_SESSION['teachername']  : '');  ?> " width="450px" >    <br/> 
+                                 
+                                 <?=addSpace(12);?> ADVISER
+                                        </form>
+
                             </div>
                         </div>
                     </div>
