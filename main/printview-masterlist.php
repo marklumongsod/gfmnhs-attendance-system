@@ -196,9 +196,7 @@ $classId = isset($_GET['classId']) ? $_GET['classId'] : '';
                     <img src="../images/image2.png" alt="Logo">
                 </div>
             </div>
-            <h2 style="text-align: center;">
-                MASTERLIST
-            </h2>
+            <h2 style="text-align: center;">MASTERLIST</h2>
 
             <div class="">
                 <br />
