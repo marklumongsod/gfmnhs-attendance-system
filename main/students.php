@@ -38,7 +38,7 @@
                             STUDENTS <br />
 
 
-                            Gr. Yr. <select name="gr_yr" onchange="if (this.value) window.location.href=this.value" required>
+                            Grade <select name="gr_yr" onchange="if (this.value) window.location.href=this.value" required>
                                 <option></option>
                                 <?php $res = my_query("SELECT *,CONCAT( value)sec  FROM tbl_settings_constants WHERE category='Grade' ORDER BY id   ");
                                 for ($i = 1; $r = $res->fetch(); $i++) {
@@ -78,7 +78,7 @@
                                         <th>LRN</th>
                                         <th>Name</th>
                                         <th>Section</th>
-                                        <th>Gr. Yr.</th>
+                                        <th>Grade</th>
                                         <th>Face Status</th>
                                         <th>Status </th>
                                         <th>Action</th>
@@ -98,15 +98,15 @@
                                         }
 
                                         if ($_SESSION['role'] == 'Teacher') {
-                                            $result = my_query("SELECT *,CONCAT(lname,',',fname,' ',LEFT(mname,1),'.')fullname ,CONCAT(email,'</br>',contact,'</br>',address)profile   FROM    tbl_classstudent cc INNER JOIN tbl_students s ON s.id=cc.studId INNER JOIN tbl_class c ON cc.classId=c.id   WHERE facId='$user_id' AND gr_yr='$gr' $section  ");
+                                            $result = my_query("SELECT *,CONCAT(lname,', ',fname,' ',LEFT(mname,1),'.')fullname ,CONCAT(email,'</br>',contact,'</br>',address)profile   FROM    tbl_classstudent cc INNER JOIN tbl_students s ON s.id=cc.studId INNER JOIN tbl_class c ON cc.classId=c.id   WHERE facId='$user_id' AND gr_yr='$gr' $section  ");
                                         } else {
-                                            $result = my_query("SELECT *,CONCAT(lname,',',fname,' ',LEFT(mname,1),'.')fullname ,CONCAT(email,'</br>',contact,'</br>',address)profile   FROM tbl_students s WHERE gr_yr='$gr' $section  ORDER BY id DESC");
+                                            $result = my_query("SELECT *,CONCAT(lname,', ',fname,' ',LEFT(mname,1),'.')fullname ,CONCAT(email,'</br>',contact,'</br>',address)profile   FROM tbl_students s WHERE gr_yr='$gr' $section  ORDER BY id DESC");
                                         }
                                     } else {
                                         if ($_SESSION['role'] == 'Teacher') {
-                                            $result = my_query("SELECT *,CONCAT(lname,',',fname,' ',LEFT(mname,1),'.')fullname ,CONCAT(email,'</br>',contact,'</br>',address)profile   FROM    tbl_classstudent cc INNER JOIN tbl_students u ON u.id=cc.studId INNER JOIN tbl_class c ON cc.classId=c.id   WHERE facId='$user_id'");
+                                            $result = my_query("SELECT *,CONCAT(lname,', ',fname,' ',LEFT(mname,1),'.')fullname ,CONCAT(email,'</br>',contact,'</br>',address)profile   FROM    tbl_classstudent cc INNER JOIN tbl_students u ON u.id=cc.studId INNER JOIN tbl_class c ON cc.classId=c.id   WHERE facId='$user_id'");
                                         } else {
-                                            $result = my_query("SELECT *,CONCAT(lname,',',fname,' ',LEFT(mname,1),'.')fullname ,CONCAT(email,'</br>',contact,'</br>',address)profile   FROM tbl_students s  ORDER BY id DESC");
+                                            $result = my_query("SELECT *,CONCAT(lname,', ',fname,' ',LEFT(mname,1),'.')fullname ,CONCAT(email,'</br>',contact,'</br>',address)profile   FROM tbl_students s  ORDER BY id DESC");
                                         }
                                     }
 
@@ -180,7 +180,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="studNo" minlength="12" maxlength="12" title="LRN max number is 12 " oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required>
+                                <input type="text" class="form-control" name="studNo" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" pattern="[0-9]+.{10,}" title="LRN must contain 12 digit" required>
                                 <label class="form-label">LRN</label>
                             </div>
                         </div>
@@ -188,7 +188,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input name="lname" type="text" class="form-control" required>
+                                <input name="lname" type="text" class="form-control" pattern="[a-zA-Z]*" title="Must contain text only" required>
                                 <label class="form-label">Lastname</label>
                             </div>
                         </div>
@@ -196,7 +196,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input name="fname" type="text" class="form-control" required>
+                                <input name="fname" type="text" class="form-control" pattern="[a-zA-Z]*" title="Must contain text only" required>
                                 <label class="form-label">Firstname</label>
                             </div>
                         </div>
@@ -204,7 +204,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input name="mname" type="text" class="form-control" required>
+                                <input name="mname" type="text" class="form-control" pattern="[a-zA-Z]*" title="Must contain text only" required>
                                 <label class="form-label">Middlename</label>
                             </div>
                         </div>
@@ -213,7 +213,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input name="email" type="email" class="form-control" required>
+                                <input name="email" type="email" class="form-control" title="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required>
                                 <label class="form-label">Email</label>
                             </div>
                         </div>
@@ -226,7 +226,14 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="col-md-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input name="address" type="text" class="form-control" required>
+                                <label class="form-label">Address</label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-8">
                         <div class="form-group form-float">
                             <div class="form-line">
@@ -235,27 +242,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input name="age" type="number" class="form-control" required>
-                                <label class="form-label">Age</label>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-8">
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input name="address" type="text" class="form-control" required>
-                                <label class="form-label">Address</label>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="col-md-4">
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <select name="gender" class="form-control select" required>
+                                    <option></option>
                                     <option>Male</option>
                                     <option>Female</option>
                                 </select>
@@ -268,7 +261,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group form-float">
-                            <label class="form-label">Gr. Yr.</label>
+                            <label class="form-label">Grade</label>
                             <div class="form-line">
 
                                 <select type="text" name="gr_yr" id="grade" class="form-control" required>
@@ -291,6 +284,32 @@
 
                                 <select type="text" id="section" name="section" class="form-control" required></select>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>Parent Data</h4>
+                    <div class="col-md-4">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input name="plname" type="text" class="form-control" pattern="[a-zA-Z]*" title="Must contain text only" required>
+                                <label class="form-label">Parent Lastname</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input name="pfname" type="text" class="form-control" pattern="[a-zA-Z]*" title="Must contain text only" required>
+                                <label class="form-label">Parent Firstname</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input name="pemail" type="email" class="form-control" title="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required>
+                                <label class="form-label">Parent Email</label>
                             </div>
                         </div>
                     </div>
@@ -339,7 +358,7 @@ for ($i = 1; $row = $result->fetch(); $i++) {
                         <div class="col-md-4">
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input name="studNo" type="text" class="form-control" value="<?= $row['studNo']; ?>" minlength="12" maxlength="12" title="LRN max number is 12 " oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required>
+                                    <input name="studNo" type="text" class="form-control" value="<?= $row['studNo']; ?>" minlength="12" maxlength="12" title="LRN max number is 12 " oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" readonly>
                                     <label class="form-label">LRN</label>
                                 </div>
                             </div>
@@ -397,7 +416,7 @@ for ($i = 1; $row = $result->fetch(); $i++) {
                         <div class="col-md-4">
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input name="age" type="number" value="<?= $row['age']; ?>" class="form-control" required>
+                                    <input name="age" type="number" value="<?= $row['age']; ?>" class="form-control" readonly>
                                     <label class="form-label">Age</label>
                                 </div>
                             </div>
@@ -466,11 +485,21 @@ for ($i = 1; $row = $result->fetch(); $i++) {
                                             <option <?= ($row['section'] == $r['sec'] ? 'selected' : '');  ?> value="<?= $r['sec']; ?>"><?= $r['sec']; ?></option>
                                         <?php } ?>
                                     </select>
+
                                 </div>
                             </div>
                         </div>
 
-
+                        <h4>Parent Email</h4>
+                    
+                        <div class="col-md-4">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input name="pemail" type="email" class="form-control" value="<?= $row['parent_email']; ?>" title="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
+                                    <label class="form-label">Parent Email</label>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -500,7 +529,7 @@ for ($i = 1; $row = $result->fetch(); $i++) {
                                         </a>
                                     </b>
                                 </i> )
-                                information? <br />There is NO undo! </h4>
+                                information? <br /> </h4>
                         </div>
                     </div>
                     <div class="modal-footer">

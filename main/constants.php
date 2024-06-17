@@ -224,7 +224,7 @@ for ($i = 1; $row = $result->fetch(); $i++) {
                                         </a>
                                     </b>
                                 </i> )
-                                information? <br/>There is NO undo! </h4>
+                                information? <br/> </h4>
                         </div>
                     </div>
                     <div class="modal-footer">

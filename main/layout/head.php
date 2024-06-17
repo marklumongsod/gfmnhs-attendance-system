@@ -78,9 +78,12 @@
     <link rel="stylesheet" type="text/css" href="../plugins/select/dist/css/select2.min.css">
 
     <!-- amcharts -->
-    <link rel="stylesheet" href="../plugins/amcharts/css/export.css" media="all" class="hide-on-print"/>
-    <link rel="stylesheet" type="text/css" href="../plugins/fullcalendar/fullcalendar.min.css" class="hide-on-print"/>
-    <link rel="stylesheet" type="text/css" href="../plugins/datetimepicker/datetimepicker.css" class="hide-on-print"/>
+    <link rel="stylesheet" href="../plugins/amcharts/css/export.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../plugins/fullcalendar/fullcalendar.min.css">
+    <link rel="stylesheet" type="text/css" href="../plugins/datetimepicker/datetimepicker.css">
+
+    
+    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 

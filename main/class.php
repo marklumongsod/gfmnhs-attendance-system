@@ -36,7 +36,7 @@
                     <div class="body">
                         <div class="table-responsive">
                             
-                            
+                            <?php    if ($_SESSION['role'] == 'Admin') { ?>
                              <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                 <thead>
                                 <tr>
@@ -51,7 +51,7 @@
                                 if ($_SESSION['role'] == 'Teacher') {
                                     $facId = $_SESSION['user_id'];
                                     $result = my_query("SELECT *,CONCAT(fname,' ',lname)teacher,CONCAT(section,'-',subject)classInfo ,c.id as cid FROM tbl_class c INNER JOIN tbl_users u ON u.id=c.facId 
-                                    WHERE classyr='$classyr' AND facId='$facId' ORDER BY c.id DESC");
+                                    WHERE classyr='$classyr' AND facId='$facId' GROUP BY facId ORDER BY c.id DESC");
                                 } else {
                                     $result = my_query("SELECT *,CONCAT(fname,' ',lname)teacher,CONCAT(section,'-',subject)classInfo ,c.id as cid FROM tbl_class c INNER JOIN tbl_users u ON u.id=c.facId WHERE classyr='$classyr'  GROUP BY facId ORDER BY c.id DESC");
                                 }
@@ -67,14 +67,16 @@
                                 <?php } ?>
                                 </tbody>
                             </table>
-                            
+                            <?php } ?>
                             
                             <?php if(isset($_GET['tid'])){ ?>
                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                 <thead>
                                 <tr>
                                     <th>Class Id </th>
+                                    <?php if ($_SESSION['role'] == 'Admin') { ?>
                                     <th>Teacher</th>
+                                    <?php }?>
                                     <th>Grade</th>
                                     <th>Section</th>
                                     <th>Subject</th>
@@ -95,7 +97,9 @@
                                     $id = $row['cid']; ?>
                                     <tr>
                                         <td><?= $row['classId']; ?></td>
+                                        <?php if ($_SESSION['role'] == 'Admin') { ?>
                                         <td><?= $row['teacher']; ?></td>
+                                        <?php }?>
                                         <td><?= $row['grade']; ?></td>
                                         <td><?= $row['section']; ?></td>
                                         <td><?= $row['subject']; ?></td>
@@ -176,7 +180,7 @@
 
                     <div class="col-md-12">
                 <div class="form-group form-float">
-                <label class="form-label">Gr. Yr.</label>
+                <label class="form-label">Grade</label>
                 <div class="form-line">
 
                 <select type="text" name="gr_yr" id="grade" class="form-control"> 
@@ -272,7 +276,7 @@ $id = $row['id']; ?>
             asd" type="button" data-toggle="modal" data-target="#edit<?= $id; ?>" style="color: red"
                                        id="removeNo"> <?= $row['section']; ?> <?= date("h:i A", strtotime($row['start'])); ?>
                                         - <?= date("h:i A", strtotime($row['end'])); ?></a></b></i> ) information?
-                            <br/>There is NO undo! </h4>
+                            <br/> </h4>
                     </div>
                 </div>
                 <div class="modal-footer">

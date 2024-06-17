@@ -4,7 +4,7 @@
    
    
 <?php 
-    $answer = shell_exec("C:\\xampp\\htdocs\\gfmnhs\\face\\FaceRegister.exe");
+    $answer = shell_exec("C:\\face\\FaceRegister.exe");
 echo $answer."</br>"; 
  
 ?>

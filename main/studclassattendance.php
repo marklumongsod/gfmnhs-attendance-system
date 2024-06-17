@@ -34,7 +34,7 @@ $result = my_query("SELECT *,
                                                 INNER JOIN tbl_class AS class ON class.id = in_out.classId
                                                 INNER JOIN tbl_users AS user ON user.id = class.facId
                                                 INNER JOIN tbl_settings_constants AS settings ON settings.value = class.section AND settings.sub_value = class.grade
-                                                WHERE in_out.classId='$classId' $dt
+                                                WHERE in_out.classId='$classId' $dt  GROUP BY stud_id,classId,xdate
                                                 ORDER BY in_out.id DESC");
 
 $_SESSION['print_data'] = array(); 
@@ -308,7 +308,7 @@ while ($row = $result->fetch()) {
                                                                                 INNER JOIN tbl_users AS user ON user.id = class.facId
                                                                                 INNER JOIN tbl_settings_constants AS settings ON settings.value = class.section AND settings.sub_value = class.grade
                                                                                 WHERE in_out.classId='$classId' $dt
-                                                                                ORDER BY in_out.id DESC");
+                                                                                GROUP BY stud_id,classId,xdate ORDER BY in_out.id DESC");
                                 $data = $result->fetch();
 
 
@@ -350,7 +350,7 @@ while ($row = $result->fetch()) {
                                 if (isset($data['adviser']) && !empty($data['adviser'])) {
                                     echo "<div style='margin-top: 20px;'>";
                                     // echo "<hr style='border: none; border-top: 1px solid #000; margin-bottom: 30px;'>";
-                                    echo "<div style='text-align: right; font-weight: bold; padding-right: 30px'>" . htmlspecialchars($data['adviser']) . "</div>";
+                                    echo "<div style='text-align: right; font-weight: bold; padding-right: 50px'>" . htmlspecialchars($data['adviser']) . "</div>";
                                     echo "<div style='text-align: right;'>__________________________</div>";
                                     echo "<div style='text-align: right; font-weight: bold; padding-right: 60px;'>Adviser</div>";
                                     echo "</div>";

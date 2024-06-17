@@ -320,7 +320,7 @@ for($i=1; $row = $result->fetch(); $i++){
         <h4>Are you sure you want to
           delete  <br/> (<i><b>
             <a data-dismiss="modal" class="call_info" data-id="
-            asd" type="button"  data-toggle="modal" data-target="#edit<?=$id; ?>" style="color: red" id="removeNo"> <?=$row['studNo']; ?></a></b></i> ) information?  <br/>There is NO undo! </h4>
+            asd" type="button"  data-toggle="modal" data-target="#edit<?=$id; ?>" style="color: red" id="removeNo"> <?=$row['studNo']; ?></a></b></i> ) information?  <br/>! </h4>
           </div>   
         </div>
         <div class="modal-footer">

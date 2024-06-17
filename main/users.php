@@ -53,9 +53,9 @@ $title = 'User'
                                     <?php
                                     if (isset($_GET['role'])) {
                                         $rol = $_GET['role'];
-                                        $sql = "SELECT *,CONCAT(lname,' ',fname)fullname FROM tbl_users WHERE status='Active' AND role='$rol' ORDER BY id DESC";
+                                        $sql = "SELECT *,CONCAT(lname,', ',fname)fullname FROM tbl_users WHERE status='Active' AND role='$rol' ORDER BY id DESC";
                                     } else {
-                                        $sql = "SELECT *,CONCAT(lname,' ',fname)fullname FROM tbl_users WHERE status='Active'  ORDER BY id DESC";
+                                        $sql = "SELECT *,CONCAT(lname,', ',fname)fullname FROM tbl_users WHERE status='Active'  ORDER BY id DESC";
                                     }
 
                                     $result = my_query($sql);
@@ -167,7 +167,7 @@ for ($i = 1; $row = $res->fetch(); $i++) {
                                         </a>
                                     </b>
                                 </i> )
-                                information? <br/>There is NO undo! </h4>
+                                information? <br/> </h4>
                         </div>
                     </div>
                     <div class="modal-footer">

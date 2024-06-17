@@ -261,7 +261,7 @@ for ($i = 1; $row = $result->fetch(); $i++) {
                                 delete <br/> (<i><b>
                                         <a data-dismiss="modal" class="call_info" data-id="
             asd" type="button" data-toggle="modal" data-target="#edit<?= $id; ?>" style="color: red" id="removeNo"> <?= $row['title']; ?></a></b></i>
-                                ) information? <br/>There is NO undo! </h4>
+                                ) information? <br/> </h4>
                         </div>
                     </div>
                     <div class="modal-footer">

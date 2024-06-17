@@ -113,7 +113,6 @@ function endecrypt($string, $action = 'e')
     return $output;
 }
 
-
 if (isset($_POST["import"])) {
     $fileName = $_FILES["excel"]["name"];
     $fileExtension = explode('.', $fileName);
@@ -128,7 +127,10 @@ if (isset($_POST["import"])) {
     $newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
 
     $targetDirectory = "uploads/" . $newFileName;
-    move_uploaded_file($_FILES['excel']['tmp_name'], $targetDirectory);
+    if (!move_uploaded_file($_FILES['excel']['tmp_name'], $targetDirectory)) {
+        echo "<script>alert('Failed to upload file.'); window.history.back();</script>";
+        exit;
+    }
 
     require 'excelReader/excel_reader2.php';
     require 'excelReader/SpreadsheetReader.php';
@@ -137,9 +139,10 @@ if (isset($_POST["import"])) {
 
     $isFirstRow = true;
     $isEmpty = true; // Flag to track if the file is empty
+    $duplicateEntries = []; // Initialize the array to track duplicate entries
 
     foreach ($reader as $key => $row) {
-        // Skip the first row
+        // Skip the first row (header)
         if ($isFirstRow) {
             $isFirstRow = false;
             continue;
@@ -150,6 +153,12 @@ if (isset($_POST["import"])) {
 
         // Extract student data
         $studNo = $row[0];
+        $bday = $row[4];
+
+        // Calculate age
+        $bdayDateTime = new DateTime($bday);
+        $currentDateTime = new DateTime();
+        $age = $currentDateTime->diff($bdayDateTime)->y;
 
         // Check if the student already exists
         $existing_student_query = $db->prepare("SELECT * FROM tbl_students WHERE studNo = :studNo");
@@ -158,27 +167,34 @@ if (isset($_POST["import"])) {
         if ($existing_student_query->rowCount() == 0) {
             // Student doesn't exist, so insert into the database
             $insert_query = $db->prepare("INSERT INTO tbl_students
-                (`studNo`,  `fname`, `lname`, `mname`,  `bday`, `age`, `gender`, `address`, `email`, `contact`,  `username`, `section`,  `gr_yr`, `password`,`status`)
+                (`studNo`, `fname`, `lname`, `mname`, `bday`, `age`, `gender`, `address`, `email`, `contact`, `username`, `section`, `gr_yr`, `password`, `status`)
                 VALUES
                 (:studNo, :fname, :lname, :mname, :bday, :age, :gender, :address, :email, :contact, :username, :section, :gr_yr, :password, :status)");
 
-            $insert_query->execute(array(
+            $result = $insert_query->execute(array(
                 ':studNo' => $studNo,
                 ':fname' => $row[1],
                 ':lname' => $row[2],
                 ':mname' => $row[3],
-                ':bday' => $row[4],
-                ':age' => $row[5],
-                ':gender' => $row[6],
-                ':address' => $row[7],
-                ':email' => $row[8],
-                ':contact' => $row[9],
-                ':username' => $row[10],
-                ':section' => $row[11],
-                ':gr_yr' => $row[12],
-                ':password' => 'd3f@auLt2023', // endecrypt('def@ult2024' . $lname, 'e');
+                ':bday' => $bday,
+                ':age' => $age,
+                ':gender' => $row[5],
+                ':address' => $row[6],
+                ':email' => $row[7],
+                ':contact' => $row[8],
+                ':username' => $row[9],
+                ':section' => $row[10],
+                ':gr_yr' => $row[11],
+                ':password' => 'd3f@auLt2023', // Example default password
                 ':status' => 'Active'
             ));
+
+            if (!$result) {
+                // If the insert fails, show error
+                $errorInfo = $insert_query->errorInfo();
+                echo "<script>alert('Error inserting data: " . htmlspecialchars($errorInfo[2]) . "'); window.history.back();</script>";
+                exit; // Stop further execution
+            }
         } else {
             // Student already exists, handle duplicate entry
             $duplicateEntries[] = $studNo;
@@ -198,6 +214,7 @@ if (isset($_POST["import"])) {
 
     echo "<script>alert('Import process completed'); document.location.href = '/gfmnhs/main/dashboards.php'; </script>";
 }
+
 
 
 ?>

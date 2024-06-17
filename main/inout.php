@@ -62,6 +62,7 @@
                                         <th>Student Name</th>
                                         <th>LRN</th>
                                         <th>Section</th>
+                                        <th> Date</th>
                                         <th>  Time</th>
                                         <th>Status</th>
                                     </tr>
@@ -75,13 +76,14 @@ $wh= " WHERE section='$section'";
                                         $wh="";
                                     }
                                     $result = my_query("SELECT i.id,CONCAT(fname, ' ' ,lname)fullname,studNo,section,xdate,xtime 
-                                     ,i.status  FROM tbl_inout i INNER JOIN tbl_students r ON r.id=i.stud_id  $wh   ORDER BY id DESC ");
+                                     ,i.status  FROM tbl_inout i INNER JOIN tbl_students r ON r.id=i.stud_id  $wh  GROUP BY stud_id,classId,xdate  ORDER BY id DESC ");
                                     for ($i = 1; $row = $result->fetch(); $i++) {
                                         $id = $row['id']; ?>
                                         <tr>
                                             <td><?= $row['fullname']; ?></td>
                                             <td><?= $row['studNo']; ?></td>
                                             <td><?= $row['section']; ?></td>
+                                            <td><?= format_date($row['xdate']); ?></td>
                                             <td><?= format_time($row['xtime']); ?></td>
                                             <td><?= $row['status']; ?></td>
                                        

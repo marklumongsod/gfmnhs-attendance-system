@@ -166,6 +166,9 @@ switch ($function) {
                 if ($_SESSION['role'] == $user) {
                     header('Location: ' . '../profile.php');
                     exit();
+                } elseif ($_SESSION['role'] == 'Parent') {
+                    header('Location: ' . '../my-attendances.php'); // Redirect to my-attendances.php for Parents
+                    exit();
                 } else {
                     header('Location: ' . '../dashboards.php');
                     exit();

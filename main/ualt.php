@@ -23,7 +23,7 @@
                                     echo $_GET['dtTo'];
                                 } ?>">
                                 <input type="submit" value="Search">
-                                <input type="submit" value="Print" onclick="printDiv('printableArea')">
+                             
                             </form>
 
                         </div>
